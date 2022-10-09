@@ -25,7 +25,7 @@ Generate password with a length of 16 lower-case letters, upper-case letters, nu
 `python SecPasGen.py 16 -u -n -sy -c`
 
 output:
-```python
+```
 -------------------------
 SECURE-PASSWORD-GENERATOR
 -------------------------
@@ -38,7 +38,7 @@ Generate password with a length of 8 letters and symbols.
 `python SecPasGen.py 8 -u -sy`
 
 output:
-```python
+```
 -------------------------
 SECURE-PASSWORD-GENERATOR
 -------------------------
