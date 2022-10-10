@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#! /usr/bin/python3
 import random as rd
 import argparse
 import re
 import clipboard as c
 
-    # Generating password! func
+    # Password_generator!
 def pass_gen(length, uppers, numbers, symbols):   
     combine = "abcdefghijklmnopqrstuvwxyz"
     l_up = combine.upper()
@@ -19,33 +19,35 @@ def pass_gen(length, uppers, numbers, symbols):
         combine += symb
 
     password = ''
-    for i in range(length):
+    for _ in range(length):
         password += combine[rd.randint(0,len(combine)-1)]
 
-    return password
+    if matched_pass(password, uppers, numbers, symbols):
+        return password
+    else:
+        return pass_gen(length, uppers, numbers, symbols)
 
-    #check if password match given inputs(up_case,nums,symbols)  # if not generate another! func
-def matched_pass(length, uppers, nums, symb):
+    #   Returns True if password satisfy the requirements! 
+def matched_pass(pw, uppers, nums, symb):
     f = True
-    password = pass_gen(length, uppers, nums, symb)
     if uppers:
-        if not re.search(r"[A-Z]", password):
+        if not re.search(r"[A-Z]", pw):
             f = False
 
     if nums:
-        if not re.search(r"\d", password):
+        if not re.search(r"\d", pw):
             f = False
 
     if symb:
-        if not re.search(r"[!@#$%^&*]", password):
+        if not re.search(r"[!@#$%^&*]", pw):
             f = False
 
-    if f:
-        return password
-    else:
-        return matched_pass(length, uppers, nums, symb)
+    if not re.search(r"[a-z]", pw):
+        f = False
 
-    # Creating arguments
+    return f
+    
+    #   Creating arguments
 parser = argparse.ArgumentParser() 
 parser.add_argument("length", help="Password length[min='8']", type=int)
 parser.add_argument("-u","--uppers", action='store_true', default=argparse.SUPPRESS, help='Include upper-case letters')
@@ -59,7 +61,7 @@ uppers = False
 nums = False
 symb = False
 
-    # Check for inserted arguments
+    #   Check for inserted arguments
 if length < 8:
     length = 8
 if 'uppers' in r:
@@ -69,16 +71,16 @@ if 'nums' in r:
 if 'symb' in r:
     symb = True
 
-res = matched_pass(length, uppers, nums, symb)
+res = pass_gen(length, uppers, nums, symb)
 
-    #Printing
-print("\n-------------------------")
-print("SECURE-PASSWORD-GENERATOR")
-print("-------------------------")
+    #   Printing
+print("+---------------------------+")
+print("| SECURE-PASSWORD-GENERATOR |")
+print("+---------------------------+")
 
+    #   Copy password to clipboard
 if 'copy' in r:
     c.copy(res)
     print("Password copied!")
 
 print(f"\nGenerated password: [{res}]")
-
