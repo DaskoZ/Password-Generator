@@ -1,9 +1,8 @@
 
 # Secure Password Generator
 
-## Script to generate secure password using python!
-
-## It can generate random password based on given arguments
+### Script to generate secure password using python!
+### It can generate random password based on given arguments
 ## Requirements:
 - python3
 - clipboard
